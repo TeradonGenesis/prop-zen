@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 
 const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
-const API_KEY = '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';
+const API_KEY = process.env.OPENAI_API_KEY;
 
 async function sendPrompt(assitantPrompt: string, prompt: string, data: string){
     let trimmedContent = '';
