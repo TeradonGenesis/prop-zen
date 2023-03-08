@@ -1,9 +1,21 @@
 const fetch = require("node-fetch");
 
 const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
-const API_KEY = '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';
+const API_KEY = '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';
 
 async function sendPrompt(assitantPrompt: string, prompt: string, data: string){
+    let trimmedContent = '';
+    const maxTokens = 4096
+    const content = `${prompt}
+    ${data}
+    `;
+
+    if(content.length > maxTokens){
+        trimmedContent = content.substring(0, maxTokens);
+    }else{
+        trimmedContent = content
+    }
+
     const response = await fetch(API_ENDPOINT, {
         method: "POST",
         headers: {
@@ -15,24 +27,20 @@ async function sendPrompt(assitantPrompt: string, prompt: string, data: string){
             messages: [
                 {
                     "role": "system", 
-                    "content": 
-                    `${assitantPrompt}`
+                    "content": assitantPrompt
                     
                 },
                 {
                     "role": "user", 
-                    "content": 
-                    `${prompt}
-
-                    ${data}
-                    `
+                    "content": trimmedContent
                 }]
         })
     });
 
     const resp = await response.json();
+    console.log(resp);
     if(resp.choices && resp.choices.length){
-        return resp.choices[0].messages.content;
+        return resp.choices[0].message.content;
     }else{
         throw new Error("No data returned");
     }

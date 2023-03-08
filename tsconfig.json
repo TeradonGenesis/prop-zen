@@ -18,6 +18,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/Scrapper.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/CallScrapper.ts"],
   "exclude": ["node_modules"]
 }
